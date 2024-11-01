@@ -87,9 +87,8 @@ for species, group in grouped:
             rate_group.loc[:, rate] = pd.to_numeric(rate_group[rate], errors='coerce')
 
             # Define parameters for PyCO2SYS
-            # Can insert fixed values for Sal and Temp, or use specific 
-            # Sal and Temp data
-            parms = dict(salinity=rate_group['Sal'].mean(), temperature = 20,
+            # Can insert fixed values for Sal and Temp, or use specific Sal and Temp data
+            parms = dict(salinity=rate_group['Sal'].mean(), temperature = rate_group['Temp [°C]'].mean(),
                          total_silicate=silicate, total_phosphate=phosphate,
                          opt_pH_scale=1, #total scale
                          opt_k_carbonic=16 #Sulpis, 2020
@@ -97,7 +96,7 @@ for species, group in grouped:
                          #Boron dissociation = Uppstrom 1974
                          )
             
-            #Compute current baseline values with avg sal for this species 
+            #Compute current baseline values with avg sal and avg temp for this species 
             # and T = 20, using a pH of 8.1 and pCO2 of 425 ppm
             baseline = pyco2.sys(**parms, 
                                 par1 = 8.1, par1_type = 3,
@@ -118,10 +117,10 @@ for species, group in grouped:
             'DIC (check)': DIC_baseline,
             'pH (check)': pH_baseline}
         
-            # Add TA in steps (up to 10,000 umol/kg) as NaOH and Na2CO3
+            # Add TA in steps (can increase max umol/kg) as NaOH and Na2CO3
             # (Can also add in the form of another alkalinity source, if
             # the effect on TA:DIC is known)
-            for i in [10] + list(range(50, 10001, 50)):
+            for i in [10] + list(range(50, 501, 50)):
                 #########NaOH#########
                 # Compute carbonate system for each addition of NaOH
                 results_NaOH = pyco2.sys(**parms, 

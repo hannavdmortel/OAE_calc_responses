@@ -110,7 +110,6 @@ best_fits = [] #response (linear, parabolic or exponential)
 best_fits_p = [] #p-value
 best_fits_r2 = [] #R^2
 best_fits_rmse = [] #RMSE
-best_fits_pre_industrial= [] #pre-industrial calcification rate
 best_fits_current = [] #current calcification rate (baseline)
 best_fits_pH_9 = [] #
 
@@ -491,10 +490,6 @@ for species, group in grouped:
                                      color='xkcd:golden rod', alpha=0.2, 
                                      label ='90% Prediction Interval', edgecolor='None')
 
-                    # Pre-industrial rate
-                    pre_industrial_rate = fl(lparams,1.16)
-                    best_fits_pre_industrial.append(pre_industrial_rate)
-
                     # Current rate
                     current_rate = fl(lparams,df2_['Baseline'].values[0])
                     best_fits_current.append(current_rate)
@@ -534,10 +529,6 @@ for species, group in grouped:
                     lower_lin = conf_int[:, 0]
                     plt.fill_between(x1_smooth, upper_lin, lower_lin, color='xkcd:golden rod', alpha=0.2, label ='90% Prediction Interval', edgecolor='None')
 
-                    # Pre-industrial rate
-                    pre_industrial_rate = fq(qparams,1.16)
-                    best_fits_pre_industrial.append(pre_industrial_rate)
-
                     # Current rate
                     current_rate = fq(qparams,df2_['Baseline'].values[0])
                     best_fits_current.append(current_rate)
@@ -562,10 +553,6 @@ for species, group in grouped:
                     plt.fill_between(x1_smooth, ciLo, ciUp, color="xkcd:golden rod", 
                                      label=r'90% prediction interval', 
                                      alpha=0.2, edgecolor='None')
-
-                    # Pre-industrial rate
-                    pre_industrial_rate = fe(xparam,1.16)
-                    best_fits_pre_industrial.append(pre_industrial_rate)
 
                     # Current rate
                     current_rate = fe(xparam,df2_['Baseline'].values[0])
@@ -612,11 +599,6 @@ for species, group in grouped:
                                 marker='d', edgecolor='grey', linewidth=0.5, 
                                 s=30, zorder=10, alpha=0.8)
 
-                # Plot calc rate pre-industrial
-                plt.axhline(y=pre_industrial_rate, color='xkcd:grey', 
-                            label='Pre-industrial calc rate', alpha=0.4, 
-                            zorder=0, linestyle = '-.')
- 
                 # Plot calc rate current
                 plt.axhline(y=current_rate, color='xkcd:blue', 
                             label='Current calc rate', alpha=0.4, 
@@ -642,7 +624,6 @@ for species, group in grouped:
                 best_fits_p.append(np.nan)
                 best_fits_r2.append(np.nan)
                 best_fits_rmse.append(np.nan)
-                best_fits_pre_industrial.append(np.nan)
                 best_fits_current.append(np.nan)
                 best_fits_pH_9.append(np.nan)
                 
@@ -729,7 +710,6 @@ best_fits_df = pd.DataFrame({
     'p-value': best_fits_p,
     'R2': best_fits_r2,
     'RMSE': best_fits_rmse,
-    'Pre-industrial rate': best_fits_pre_industrial,
     'Current rate': best_fits_current,
     'Rate at pH 9': best_fits_pH_9,
     })

@@ -212,17 +212,6 @@ for ax in axes:
                 rotation=55, #adjust rotation as needed
                 bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
 
-    # Add and annotate pre-industrial line (TA:DIC=1.16)
-    pi_x1 = xmin
-    pi_y1 = 1.16*xmin
-    pi_x2 = ymax/1.16
-    pi_y2 = ymax
-    ax.plot([pi_x1, pi_x2], [pi_y1, pi_y2], color='grey', linewidth=6, 
-            linestyle=':', zorder=5)
-    ax.annotate('TA:DIC=1.16', xy=(1500, 1350), color='black', fontsize=13, 
-                zorder=15, va='bottom', ha='right', rotation=41.5,
-                bbox=dict(facecolor='xkcd:light grey', edgecolor='none', 
-                          alpha=0.7))
 
 # Annotate plots
 axes[0].annotate('a.', xy=(3050, 1150), color='white', fontsize=21)
